@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {betterAuth,type BetterAuthOptions} from 'better-auth';
+import {getMigrations} from 'better-auth/db/migration';
+import {authOptions} from '../lib/auth-options';
+import {ownerFrom} from '../lib/handlers';
+
+// Entirely synthetic in-memory identity, never used on the hosted service.
+test('real Better Auth login/session/logout work and public signup is disabled',async()=>{
+  const db=new DatabaseSync(':memory:');
+  const origin='http://127.0.0.1:3000';
+  const secret='synthetic-in-memory-auth-test-secret-only-123456789';
+  const seedOptions:BetterAuthOptions={...authOptions(origin,secret,true),database:db};
+  await (await getMigrations(seedOptions)).runMigrations();
+  const seed=betterAuth(seedOptions);
+  const enrollment=await seed.api.signUpEmail({body:{email:'synthetic-owner@example.test',password:'synthetic-test-password-ONLY-12345',name:'Synthetic owner'}});
+  const ownerId=enrollment.user.id;
+  const auth=betterAuth({...authOptions(origin,secret),database:db} as BetterAuthOptions);
+  const signup=await auth.handler(new Request(origin+'/api/auth/sign-up/email',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({email:'intruder@example.test',password:'synthetic-OTHER-password-12345',name:'Other'})}));
+  assert.equal(signup.ok,false);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM "user"').get()?.n,1);
+  const bad=await auth.handler(new Request(origin+'/api/auth/sign-in/email',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({email:'synthetic-owner@example.test',password:'incorrect-test-password'})}));
+  assert.equal(bad.ok,false);
+  const login=await auth.handler(new Request(origin+'/api/auth/sign-in/email',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({email:'synthetic-owner@example.test',password:'synthetic-test-password-ONLY-12345',rememberMe:false})}));
+  assert.equal(login.status,200);
+  const cookies=login.headers.getSetCookie().map(c=>c.split(';')[0]).join('; ');
+  assert.match(cookies,/session_token=/);
+  const headers=new Headers({cookie:cookies,origin});
+  const session=await auth.api.getSession({headers});
+  assert.equal(ownerFrom(session,ownerId),ownerId);
+  assert.equal(await auth.api.getSession({headers:new Headers()}),null);
+  assert.equal(await auth.api.getSession({headers:new Headers({cookie:'better-auth.session_token=forged'})}),null);
+  const stored=db.prepare('SELECT "ipAddress", "userAgent" FROM session').get();
+  assert.equal(stored?.ipAddress,null);assert.equal(stored?.userAgent,null);
+  const logout=await auth.handler(new Request(origin+'/api/auth/sign-out',{method:'POST',headers:new Headers({cookie:cookies,origin,'content-type':'application/json'}),body:'{}'}));
+  assert.equal(logout.status,200);
+  assert.equal(await auth.api.getSession({headers}),null);
+  db.close();
+});

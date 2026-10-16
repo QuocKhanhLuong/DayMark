@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+config.json
+.runtime/
+tools/ActivityWatch.app/
+.env*
+node_modules/
+.next/
+.vercel/
+*.tsbuildinfo
+.DS_Store
+*.log
+*.sqlite*
+*.db
+*.dmg
+docs/CONTINUATION.md

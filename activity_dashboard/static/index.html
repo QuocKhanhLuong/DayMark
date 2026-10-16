@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Your private, local activity journal. Daily focus time and a year of small steps.">
+  <title>Daymark · Activity journal</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to activity</a>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Daymark home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>daymark<span class="brand-caption">ACTIVITY JOURNAL</span></a>
+      <span class="local-badge"><span class="lock-icon" aria-hidden="true"></span>Local to this Mac</span>
+    </header>
+    <main id="main">
+      <section class="intro" aria-labelledby="page-title">
+        <div><p class="eyebrow">A RECORD OF YOUR EVERYDAY</p><h1 id="page-title">Small steps.<br><em>A bigger picture.</em></h1><p class="intro-description">Your coding, conversations, and reading — one day at a time.</p></div>
+        <div class="intro-note"><span class="note-line"></span><p>Focus time, thoughtfully counted.</p><span>Foreground activity · idle excluded<br>Days follow Asia/Ho_Chi_Minh (UTC+7)</span></div>
+      </section>
+
+      <section class="controls" aria-label="Dashboard controls">
+        <div class="control-group"><label for="source">Data source</label><select id="source"><option value="live">My activity · ActivityWatch</option><option value="demo">Synthetic demo · sample data</option></select></div>
+        <div class="control-group"><label for="device">Device</label><select id="device" disabled><option value="">Waiting for ActivityWatch</option></select></div>
+        <div class="control-group year-control"><label for="year">Year</label><input id="year" type="number" min="2000" max="2100" step="1" aria-label="Heatmap year"></div>
+        <button class="refresh-button" id="refresh" type="button"><span class="refresh-icon" aria-hidden="true">↻</span> Refresh</button>
+      </section>
+      <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>
+      <div id="demo-banner" class="demo-banner" hidden><strong>Synthetic demo</strong><span>These are invented sample activities for previewing the dashboard. They are not your activity.</span></div>
+      <div id="connection-banner" class="connection-banner" role="status"><span class="status-dot"></span><div><strong>Connecting to ActivityWatch</strong><p>Checking the local collection service…</p></div></div>
+
+      <section class="category-filter" aria-labelledby="filter-label"><div class="filter-heading"><h2 id="filter-label">What counts in your view</h2><button class="text-button" id="select-all" type="button">Select all</button></div><div id="filters" class="filter-options"></div></section>
+      <section id="summary" class="summary-grid" aria-label="Observed activity totals"><div class="skeleton-card">Loading activity…</div></section>
+
+      <section class="panel year-panel" aria-labelledby="year-title">
+        <div class="panel-heading"><div><p class="eyebrow">THE LONG VIEW</p><h2 id="year-title">Your year in focus</h2></div><p id="year-caption" class="panel-caption">Every square is a day.<br>Select one to see its story.</p></div>
+        <div class="heatmap-scroll" tabindex="0" aria-label="Yearly activity heatmap. Scroll horizontally on narrow screens."><div id="heatmap" class="heatmap"></div></div>
+        <div class="heatmap-footer"><p>Only observed time is counted. Gaps stay visible.</p><div class="legend" aria-label="Heatmap legend"><span class="legend-item"><i class="swatch missing"></i>No data</span><span class="legend-item"><i class="swatch level-0"></i>0</span><span class="scale"><i class="swatch level-1"></i><i class="swatch level-2"></i><i class="swatch level-3"></i><i class="swatch level-4"></i></span><span>6h+</span><span class="legend-item"><i class="swatch partial level-2"></i>Partial day</span></div></div>
+      </section>
+
+      <section class="day-section" aria-labelledby="day-title">
+        <div class="day-heading"><div><p class="eyebrow">A CLOSER LOOK</p><h2 id="day-title">Daily journal</h2></div><div class="date-controls"><button id="previous-day" type="button" aria-label="Previous day">←</button><label class="sr-only" for="selected-date">Selected day</label><input id="selected-date" type="date"><button id="next-day" type="button" aria-label="Next day">→</button><button class="today-button" id="today" type="button">Today</button></div></div>
+        <div id="day-details"></div>
+      </section>
+
+      <section class="panel collection-panel" aria-labelledby="collection-title"><div><p class="eyebrow">BEHIND THE NUMBERS</p><h2 id="collection-title">Collection & coverage</h2><p class="muted">ActivityWatch keeps the source data on this Mac. This view reads its local API.</p></div><div id="collection-status" class="collection-status"></div></section>
+      <footer><span>daymark<span class="footer-dot">·</span>A private record of time well spent.</span><span>No cloud. No account. Just your days.</span></footer>
+    </main>
+  </div>
+</body>
+</html>

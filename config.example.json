@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "app_categories": {},
+    "domain_categories": {
+      "arxiv.org": "reading",
+      "nature.com": "reading",
+      "news.ycombinator.com": "reading"
+    },
+    "browser_bucket_map": {},
+    "browser_apps": {}
+  },
+  "bucket_devices": {}
+}
