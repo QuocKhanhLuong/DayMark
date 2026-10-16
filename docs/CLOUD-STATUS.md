@@ -9,14 +9,16 @@ The optional Vercel/Neon app stores only daily dates, coverage status, and six c
 - Database connection, signing secret, and sync token stored in ignored owner-readable local files. No credential values are included in this repository.
 - User-approved Vercel CLI login completed. Dedicated `daymark-private` project created in the verified account. The earlier connected-API project creation returned permission denied; the authorized CLI path succeeded.
 - Owner setup requires two hidden password entries and explicit CREATE. Invalid length or mismatch now reports a safe reason and retries without printing input.
-- User-provided GitHub repository was inspected: public and initially empty. Only sanitized source, documentation, and synthetic tests are intended for it.
+- User-provided [GitHub repository](https://github.com/QuocKhanhLuong/DayMark) was inspected: public and initially empty. Sanitized source, documentation, and synthetic tests were pushed to `main` in commit `ccc319f`. All 61 files passed checks against private local setup values, credential patterns, database URIs, private keys, private paths, and generated files. The Git commit uses a GitHub no-reply address.
+- Vercel's dedicated project is connected to that repository, with `cloud` as root and the reviewed Next.js build/install commands. Assigned production origin: `https://daymark-private.vercel.app`.
 
 ## Pending verification
 
 - The owner must finish `setup-owner.command` locally. An earlier attempt stopped before submission; no password is available to the agent.
-- Configure Vercel's exact canonical origin, dedicated database connection, signing secret, confirmed owner ID, and sync-token hash as sensitive server environment values.
-- Link the GitHub repository with `cloud` as root, deploy, and verify hosted authentication and aggregate sync before calling the online app complete.
-- No live dashboard URL or uploaded activity is claimed yet.
+- Automatic approval review rejected sending the database connection, signing secret, and sync-token hash to Vercel because the previous user consent did not explicitly name that sensitive payload and destination. No transfer occurred. A specific approval request is pending; do not retry or use another transfer path without new explicit authorization.
+- After that approval, configure the exact canonical origin, dedicated database connection, signing secret, confirmed owner ID, and sync-token hash as sensitive server environment values.
+- Build the source-only app, then verify hosted authentication and aggregate sync after the pending user actions before calling the online app complete. Until configuration is complete, activity and authentication APIs fail closed.
+- No working hosted login or uploaded activity is claimed yet.
 - Edge watcher installation remains pending; the local app/window and idle watchers already produce observations. Login auto-start and scheduled sync remain disabled.
 
 ## Validation
