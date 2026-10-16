@@ -19,10 +19,10 @@ Raw ActivityWatch events stay on the Mac. Cloud activity storage accepts only da
 
 Keep ActivityWatch running during use. Open `launch.command` for the local dashboard; open `sync-now.command` yourself and type SYNC when you want to update the web. See [daily usage](SYNC.md). No login auto-start or scheduled upload is enabled. Orca background duration remains unsupported; foreground Orca use is categorized normally.
 
-## Verification and remaining check
+## Verification
 
 - **80 Python, 11 local UI, and 18 cloud tests passed**. Typecheck and production build passed. Test activity, identities, tokens, and setup files are synthetic and never imported into production.
 - Source audit checks all candidate/staged files against private setup values, forbidden generated/private paths, credential patterns, database URIs, private keys, and personal account paths/emails. Real credentials, owner IDs/emails, device/bucket IDs, event records, receipts, and runtime logs remain ignored local data.
-- Successful hosted login, refresh with real data, manual sync receipt, and recent live browser collection are verified. Live logout/relogin confirmation is still pending; synthetic auth tests verify session revocation. Do not claim this last human check before the owner reports it.
+- Successful hosted login, refresh with real data, manual sync receipt, and recent live browser collection are verified. The owner also confirmed Sign out, refresh returning to login, and successful login again with data preserved. Synthetic auth tests independently verify session revocation.
 
 Provider resource IDs and personal operational details belong in ignored local runtime storage, not in this public source record.
