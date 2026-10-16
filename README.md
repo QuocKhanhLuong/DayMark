@@ -87,4 +87,6 @@ Official references: [FAQ](https://docs.activitywatch.net/en/latest/faq.html), [
 
 ## Private online dashboard
 
-The approved Vercel/Neon extension is in `cloud/`; local ActivityWatch and this localhost dashboard remain available. See [cloud status](docs/CLOUD-STATUS.md) for actual provisioning and required user actions. No live URL is claimed until hosted authentication and aggregate sync are verified.
+The approved Vercel/Neon extension is in `cloud/`; local ActivityWatch and this localhost dashboard remain available. See [cloud status](docs/CLOUD-STATUS.md) for actual provisioning and required user actions. Hosted login and aggregate sync remain incomplete until verified after owner configuration.
+
+The source build is now Ready at https://daymark-private.vercel.app with a setup-in-progress page. Complete [owner-controlled Vercel configuration](docs/VERCEL-HANDOFF.md) before using hosted login or sync. The agent does not transmit production credentials.

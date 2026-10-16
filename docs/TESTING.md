@@ -11,10 +11,10 @@ npm run typecheck
 NEXT_TELEMETRY_DISABLED=1 npm run build -- --webpack
 ```
 
-Latest baselines: **68 Python, 11 local JavaScript UI, and 18 cloud tests passed**. Typecheck and the production build passed. All activity and identity fixtures in tests are synthetic; none are imported into the live collector or database.
+Latest baselines: **73 Python, 11 local JavaScript UI, and 18 cloud tests passed**. Typecheck and the production build passed. All activity and identity fixtures in tests are synthetic; none are imported into the live collector or database. Local handoff tests use temporary synthetic setup files only and verify exact key scope, pooled certificate-verified URI construction, missing-owner refusal, input validation, file permissions, and symlink refusal.
 
 Tests cover UTC+7 day/year/leap boundaries, current-time clipping, idle exclusion, overlap and duplicate/conflicting watchers, browser identity, category precedence, missing/zero/future states, cross-year weeks, device isolation, malformed events, source-switch races, localhost Host/Origin restrictions, and aggregate-only export. Cloud tests cover actual in-memory Better Auth sessions, disabled signup, owner authorization, write-only token scope, strict payload bounds, cross-site denial, redacted failures, and password input retry/cancellation.
 
 Local browser smoke checks verified the explicit no-data view and labeled synthetic demo, heatmap, category filters, and responsive layout. HTTP checks verified local HTML, JavaScript, live and demo endpoints. Later checks confirmed fresh real window/AFK observations; browser extension collection remains unverified because native browser-control tooling became unavailable.
 
-Hosted owner login/logout/session and real aggregate sync remain deployment acceptance steps. Do not infer those from unit tests or a successful build.
+The Git-triggered source deployment reached Ready. Public HTTP checks returned root/login 200 and setup-incomplete 503 for activity/session/sync/signup APIs, with no disclosed data. Hosted owner login/logout/session and real aggregate sync remain deployment acceptance steps after user-controlled configuration. Do not infer those from unit tests or a successful build.
