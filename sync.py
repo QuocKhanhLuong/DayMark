@@ -72,6 +72,18 @@ def send_payload(payload, origin, token, opener=None):
         raise SyncError('Sync outcome is unconfirmed. Check the dashboard last-sync time before retrying. No server body or credentials were logged.') from None
 
 
+def collect_payload(year, device=None):
+    """Read one live snapshot and cross the aggregate-only export boundary."""
+    config_path = ROOT / 'config.json'
+    config = json.loads(config_path.read_text()) if config_path.exists() else {}
+    now = datetime.now(ZoneInfo('Asia/Ho_Chi_Minh'))
+    selected = now.date().isoformat() if year == now.year else f'{year}-01-01'
+    query = {'year': [str(year)], 'date': [selected], 'source': ['live']}
+    if device:
+        query['device'] = [device]
+    return export_snapshot(Dashboard(config).get(query))
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--year', type=int, default=datetime.now(ZoneInfo('Asia/Ho_Chi_Minh')).year)
@@ -80,14 +92,7 @@ def main(argv=None):
     parser.add_argument('--send', action='store_true', help='Explicitly upload the whitelisted daily aggregates')
     args = parser.parse_args(argv)
     try:
-        config_path = ROOT / 'config.json'
-        config = json.loads(config_path.read_text()) if config_path.exists() else {}
-        now = datetime.now(ZoneInfo('Asia/Ho_Chi_Minh'))
-        selected = now.date().isoformat() if args.year == now.year else f'{args.year}-01-01'
-        query = {'year': [str(args.year)], 'date': [selected], 'source': ['live']}
-        if args.device:
-            query['device'] = [args.device]
-        payload = export_snapshot(Dashboard(config).get(query))
+        payload = collect_payload(args.year, args.device)
         known = sum(day['seconds'] is not None for day in payload['days'])
         if not args.send:
             print(f'Dry run: {len(payload["days"])} dates, {known} observed days. Nothing uploaded.')

@@ -87,6 +87,6 @@ Official references: [FAQ](https://docs.activitywatch.net/en/latest/faq.html), [
 
 ## Private online dashboard
 
-The approved Vercel/Neon extension is in `cloud/`; local ActivityWatch and this localhost dashboard remain available. See [cloud status](docs/CLOUD-STATUS.md) for actual provisioning and required user actions. Hosted login and aggregate sync remain incomplete until verified after owner configuration.
+The private Vercel/Neon app is in `cloud/`, deployed at **https://daymark-private.vercel.app**. The owner completed secure configuration, signed in, and confirmed real aggregate data is visible after sync. Raw ActivityWatch records stay on the Mac. See [cloud status](docs/CLOUD-STATUS.md) for verification and [owner-controlled setup](docs/VERCEL-HANDOFF.md) for fresh setup or recovery.
 
-The source build is now Ready at https://daymark-private.vercel.app with a setup-in-progress page. Complete [owner-controlled Vercel configuration](docs/VERCEL-HANDOFF.md) before using hosted login or sync. The agent does not transmit production credentials.
+For normal use, keep ActivityWatch running while using the Mac. At the end of a day, double-click **`sync-now.command`**, review the date/coverage summary, and type **SYNC**. It sends daily aggregates directly to the fixed production origin using the private local token, then saves a redacted receipt. No token copy/paste is needed. Refresh the web dashboard afterward. Local collection and heatmap calculation do not require an upload; `launch.command` opens the localhost app. See [daily usage and sync](docs/SYNC.md).

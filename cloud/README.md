@@ -55,7 +55,9 @@ Tests use synthetic in-memory identities and payloads. They do not write fixture
 
 ## Local sync
 
-From the parent project, `python3 sync.py` validates the live snapshot without uploading. Explicit upload requires `--send --origin https://YOUR_VERIFIED_DEPLOYMENT` and DAYMARK_SYNC_TOKEN injected from the private local credential file. No background or login persistence is configured.
+From the parent project, the owner opens `sync-now.command`, reviews the aggregate-only summary, and types SYNC. The command reads the existing local write token without displaying it, sends the reviewed snapshot to the fixed production origin, and stores only a private server receipt. The agent must not run this authenticated command on the owner's behalf. No background or login persistence is configured. See [daily usage](../docs/SYNC.md).
+
+`python3 sync.py` remains a dry-run by default. Advanced explicit upload requires `--send --origin https://YOUR_VERIFIED_DEPLOYMENT` and DAYMARK_SYNC_TOKEN in the user-controlled process environment; never put a token in shell history or source.
 
 The hosted dashboard offers yearly heatmap, daily category drilldown, filters, selected day/week/month/year totals, last-sync time, and missing-data states. Detailed timelines remain in the localhost dashboard because they require event timestamps.
 

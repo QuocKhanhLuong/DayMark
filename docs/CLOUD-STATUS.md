@@ -1,31 +1,28 @@
 # Private online dashboard status — 2026-10-16
 
-The optional Vercel/Neon app stores only daily dates, coverage status, and six category duration totals. Raw ActivityWatch events stay on the Mac. Owner-only reads and a separate write-only sync token are enforced by the server. Public registration is disabled.
+The production app is **Ready** at https://daymark-private.vercel.app. The owner confirmed successful login and visible real activity after a manual aggregate sync. Local window, idle, and Edge browser watchers all have recent observations.
 
 ## Completed
 
-- Next.js app, Better Auth owner sessions, strict aggregate API, heatmap, filters, daily drilldown, period totals, and manual Mac sync implemented.
-- Dedicated free Neon database created in Singapore. Authentication and aggregate schemas applied. No real or synthetic activity uploaded.
-- Database connection, signing secret, and sync token stored in ignored owner-readable local files. No credential values are included in this repository.
-- User-approved Vercel CLI login completed. Dedicated `daymark-private` project created in the verified account. The earlier connected-API project creation returned permission denied; the authorized CLI path succeeded.
-- Owner setup requires two hidden password entries and explicit CREATE. Invalid length or mismatch now reports a safe reason and retries without printing input.
-- User-provided [GitHub repository](https://github.com/QuocKhanhLuong/DayMark) was inspected: public and initially empty. Sanitized source, documentation, and synthetic tests were pushed to `main` in commit `ccc319f`. All 61 files passed checks against private local setup values, credential patterns, database URIs, private keys, private paths, and generated files. The Git commit uses a GitHub no-reply address.
-- Vercel's dedicated project is connected to that repository, with `cloud` as root and the reviewed Next.js build/install commands. Assigned production origin: `https://daymark-private.vercel.app`.
+- Next.js app, Better Auth owner sessions, strict aggregate API, yearly heatmap, category filters, daily drilldown, day/week/month/year totals, missing/partial states, and manual Mac sync implemented.
+- Dedicated free Neon database in Singapore, with pinned authentication and aggregate schemas. No purchase or paid feature was enabled.
+- The owner entered and confirmed their own password in the local enrollment script. No password was available to the agent or saved in a local file.
+- The owner entered five Production-only Secret settings directly in the dedicated Vercel project and redeployed. Tool verification read names/targets only; secret values were not retrieved. The earlier attempted agent credential transfer was rejected and never retried. Its ordinary consent question was superseded by [owner-controlled handoff](VERCEL-HANDOFF.md).
+- Vercel CLI login completed through the user's approved official flow. The dedicated project uses the user-provided GitHub repository, `main`, `cloud` root, Node.js 24, and reviewed build/install commands. Production functions run in Singapore.
+- Configured deployment smoke passed: root redirects to login (307), login renders (200), unauthenticated activity/sync deny (401), session returns null/no-store (200), public signup is unavailable (404), and cross-site activity requests deny (403).
+- The owner ran `sync-now.command` and explicitly submitted SYNC. A server-generated success receipt was verified in ignored local storage; the owner confirmed the web shows the uploaded data after refresh. No synthetic activity was inserted in the live database.
+- The owner installed the official Edge extension. The unique same-device Chrome-labeled bucket was verified against foreground Edge and mapped locally by exact ID. The unknown startup placeholder remains excluded. Before/after comparison preserved all daily foreground totals.
 
-## Pending verification
+## Data and operation boundaries
 
-- The owner must finish `setup-owner.command` locally. An earlier attempt stopped before submission; no password is available to the agent.
-- Automatic approval review rejected sending the database connection, signing secret, and sync-token hash to Vercel. No transfer occurred. The ordinary approval question is superseded: the owner must enter/submit those values directly in Vercel, not through agent tools. Do not retry the rejected transfer or treat a general consent answer as permission to transmit secrets.
-- The source deployment finished **Ready** at https://daymark-private.vercel.app. Root/login returned 200; root clearly shows setup-in-progress. Unauthenticated GET activity, POST sync, GET session, and POST signup requests returned 503 with a fixed setup-incomplete error and private/no-store headers. No activity or authentication data was disclosed.
-- Follow [owner-controlled configuration instructions](VERCEL-HANDOFF.md): finish local enrollment, run the offline preparation helper yourself, enter five Production-only Secret settings directly in the dedicated Vercel project, and redeploy. Hosted owner login/logout/session and aggregate sync remain unverified.
-- No working hosted login or uploaded activity is claimed yet.
-- Edge watcher installation remains pending; the local app/window and idle watchers already produce observations. Login auto-start and scheduled sync remain disabled.
+Raw ActivityWatch events stay on the Mac. Cloud activity storage accepts only daily dates, coverage status, and six category duration totals. Every activity read checks the exact owner session. Sync uses a separate write-only token and cannot read activity. No public registration or sharing is enabled. Unknown days are never filled with zeros.
 
-## Validation
+Keep ActivityWatch running during use. Open `launch.command` for the local dashboard; open `sync-now.command` yourself and type SYNC when you want to update the web. See [daily usage](SYNC.md). No login auto-start or scheduled upload is enabled. Orca background duration remains unsupported; foreground Orca use is categorized normally.
 
-- 73 Python tests and 11 local UI tests passed; fixtures are synthetic, including all local handoff tests.
-- 18 cloud tests passed, including real in-memory Better Auth login/session/logout, rejected public signup, unauthorized API calls, token scope, strict payload checks, and owner input retry/cancellation.
-- TypeScript typecheck and production build passed. The production build will be repeated if deployed sources change.
-- Expanded source audit: 65 files checked with no detected private setup values, generated/private paths, credential patterns, database URIs, private keys, or personal account paths/emails. No real credentials were used in handoff-helper tests.
+## Verification and remaining check
 
-Resource IDs, provider credentials, owner identity/enrollment records, and operational logs belong only in ignored local runtime storage. This public setup record deliberately omits their values.
+- **80 Python, 11 local UI, and 18 cloud tests passed**. Typecheck and production build passed. Test activity, identities, tokens, and setup files are synthetic and never imported into production.
+- Source audit checks all candidate/staged files against private setup values, forbidden generated/private paths, credential patterns, database URIs, private keys, and personal account paths/emails. Real credentials, owner IDs/emails, device/bucket IDs, event records, receipts, and runtime logs remain ignored local data.
+- Successful hosted login, refresh with real data, manual sync receipt, and recent live browser collection are verified. Live logout/relogin confirmation is still pending; synthetic auth tests verify session revocation. Do not claim this last human check before the owner reports it.
+
+Provider resource IDs and personal operational details belong in ignored local runtime storage, not in this public source record.

@@ -1,6 +1,6 @@
 # Owner-controlled Vercel configuration
 
-The source deployment is Ready at **https://daymark-private.vercel.app**, but it shows setup-in-progress and denies activity/authentication requests until configuration is finished. No real or synthetic activity has been uploaded.
+The production deployment is Ready at **https://daymark-private.vercel.app**. The owner completed the steps below, confirmed successful login, and performed a real aggregate sync. This guide remains for fresh setup or recovery; existing-owner enrollment refuses duplicates. No synthetic activity has been uploaded.
 
 The earlier ordinary consent question about the agent uploading credentials is superseded. The agent must not submit database/password-bearing URLs, signing/authentication secrets, or enrollment passwords through its tools. The owner enters and submits production settings directly in Vercel. Do not paste values into chat or send screenshots of them.
 
